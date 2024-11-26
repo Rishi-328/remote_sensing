@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "361205203036",
+    "project_id": "remsen-e5376",
+    "storage_bucket": "remsen-e5376.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361205203036:android:761035a429359b7f256699",
+        "android_client_info": {
+          "package_name": "com.example.remote_sensing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyqGjGOwQh5zIOXazik3-XoDk4sMHub2M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361205203036:android:b6fa331c725a388a256699",
+        "android_client_info": {
+          "package_name": "com.example.remote_sensing.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyqGjGOwQh5zIOXazik3-XoDk4sMHub2M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

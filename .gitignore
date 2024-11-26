@@ -1,0 +1,136 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+.metadata
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+#you don't push all these thib
+
+# Node.js related
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Firebase related
+firebase.json
+
+# Environment files
+.env
+
+# Generated keys and certificates
+server.cert
+server.key
+
+# Package manager related
+package-lock.json
+pubspec.lock
+
+# Ignore the model file
+*.onnx 
+.env
+/node_modules
+
+
+
+
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+.env
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Backend related
+
+
+# Ignore Flutter build files
+Frontend/build/
+Frontend/.dart_tool/
+Frontend/.packages
+Frontend/.flutter-plugins
+Frontend/.flutter-plugins-dependencies
+.idea/
+.vscode/
+
+# Flutter/Dart related
+**/build/
+**/.dart_tool/
+**/.packages
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.pub-cache/
+**/.pub/
+**/doc/api/
+**/ios/Flutter/.last_build_id
+
+# iOS and Android build artifacts
+ios/Flutter/Flutter.framework
+ios/Flutter/App.framework
+ios/Flutter/engine/
+android/.gradle/
+android/.idea/
+android/app/build/
+android/local.properties
+
+# Symbolication and Obfuscation related
+app.*.symbols
+app.*.map.json
+
+# Large model files
+modelSpecNew.onnx
+.bashrc
+
+android/app/google-services.json
+lib/firebase_options.dart
