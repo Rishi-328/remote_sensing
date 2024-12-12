@@ -5,14 +5,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart'; // Import dotenv
 
-class CropImageClassificationPage extends StatefulWidget {
-  const CropImageClassificationPage({super.key});
+class CropImageClassificationVIT extends StatefulWidget {
+  const CropImageClassificationVIT({super.key});
 
   @override
-  _CropImageClassificationPageState createState() => _CropImageClassificationPageState();
+  _CropImageClassificationVITState createState() => _CropImageClassificationVITState();
 }
 
-class _CropImageClassificationPageState extends State<CropImageClassificationPage> {
+class _CropImageClassificationVITState extends State<CropImageClassificationVIT> {
   File? _image;
   String? _prediction;
   String? _serverIp;
@@ -63,7 +63,7 @@ class _CropImageClassificationPageState extends State<CropImageClassificationPag
 
     // Prepare the request payload
     var response = await http.post(
-      Uri.parse('http://$serverIp:5000/predict'),
+      Uri.parse('http://$serverIp:5000/predictusingvit'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -105,7 +105,7 @@ Widget build(BuildContext context) {
             ),
           ),
           Text(
-            '(VGG16)',
+            '(VIT)',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,

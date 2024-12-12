@@ -32,10 +32,12 @@ class _SarImageColorisationState extends State<SarImageColorisation> {
   String? _prediction;
   String? _serverIp;
   Image? _colorizedImage; // Holds the colorized image
+  Image? _groundTruthImage;
 
   @override
   void initState() {
     super.initState();
+     _loadGroundTruthImage();
     // Load the environment variables
     // _loadEnv();
   }
@@ -47,6 +49,14 @@ class _SarImageColorisationState extends State<SarImageColorisation> {
   //     print('Server IP loaded: $_serverIp'); // Debugging line
   //   });
   // }
+
+
+ 
+  Future<void> _loadGroundTruthImage() async{
+    setState(() {
+      _groundTruthImage = Image.asset('assets/ROIs1970_fall_s2_8_p11.png');
+    });
+  }
 
   Future<void> _pickImage() async {
     try {
@@ -107,47 +117,62 @@ class _SarImageColorisationState extends State<SarImageColorisation> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sar Image Colorisation'),
-      ),
-      backgroundColor: Colors.grey[200],
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 16),
-            // Display selected image if it's available
-            _image == null
-                ? const Text('No image selected.')
-                : Image.file(
-                    _image!,
-                    height: 200,
-                    width: 200,
-                  ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _pickImage,
-              child: const Text('Select Image from Gallery'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _uploadImage,
-              child: const Text('Upload and Predict'),
-            ),
-            const SizedBox(height: 16),
-            // Display prediction message or error message if any
-            
-            const SizedBox(height: 16),
-            // Display the colorized image if available
-            _colorizedImage == null
-                ? const Text('Colorized image will appear here.')
-                : _colorizedImage!,
-          ],
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('Sar Image Colorisation'),
+    ),
+    backgroundColor: Colors.grey[200],
+    body: SingleChildScrollView(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0), // Add padding for spacing
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center, // Center horizontally
+            children: [
+              const SizedBox(height: 16),
+              // Display selected image if it's available
+              _image == null
+                  ? const Text('No image selected.')
+                  : Image.file(
+                      _image!,
+                      height: 200,
+                      width: 200,
+                    ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: const Text('Select Image from Gallery'),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _uploadImage,
+                child: const Text('Upload and Predict'),
+              ),
+              const SizedBox(height: 16),
+              // Display the colorized image if available
+              _colorizedImage == null
+                  ? const Text('Colorized image will appear here.')
+                  : Column(
+                      children: [
+                        const Text('Colorized Image:'),
+                        const SizedBox(height: 8),
+                        _colorizedImage!,
+                        const SizedBox(height: 16),
+                        // Display the ground truth image only when colorized image is available
+                        const Text('Ground Truth Image:'),
+                        const SizedBox(height: 8),
+                        _groundTruthImage ?? const Text('Ground truth not loaded.'),
+                      ],
+                    ),
+            ],
+          ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }

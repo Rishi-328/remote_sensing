@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // Navigate to the Welcome Page on successful login
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const mainscreen()),
+          MaterialPageRoute(builder: (context) => const mainScreen()),
         );
       } on FirebaseAuthException catch (e) {
         String message;
