@@ -16,6 +16,7 @@ class _WelcomePageState extends State<WelcomePage> {
   File? _image;
   String? _prediction;
   String? _serverIp;
+  String? _port;
 
   @override
   void initState() {
@@ -51,6 +52,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
   Future<void> _uploadImage() async {
     final serverIp = dotenv.env['SERVER_IP'];
+    final port = dotenv.env['PORT'];
     if (_image == null) {
       print('No image to upload'); // Debugging line
       return;
@@ -63,7 +65,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
     // Prepare the request payload
     var response = await http.post(
-      Uri.parse('http://$serverIp:5000/predict'),
+      Uri.parse('http://$serverIp:$port/predict'),
       headers: {
         'Content-Type': 'application/json',
       },

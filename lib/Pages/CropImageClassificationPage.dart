@@ -16,6 +16,7 @@ class _CropImageClassificationPageState extends State<CropImageClassificationPag
   File? _image;
   String? _prediction;
   String? _serverIp;
+  String? _port;
 
   @override
   void initState() {
@@ -51,6 +52,7 @@ class _CropImageClassificationPageState extends State<CropImageClassificationPag
 
   Future<void> _uploadImage() async {
     final serverIp = dotenv.env['SERVER_IP'];
+    final port = dotenv.env['PORT'];
     if (_image == null) {
       print('No image to upload'); // Debugging line
       return;
@@ -63,7 +65,7 @@ class _CropImageClassificationPageState extends State<CropImageClassificationPag
 
     // Prepare the request payload
     var response = await http.post(
-      Uri.parse('http://$serverIp:5000/predict'),
+      Uri.parse('http://$serverIp:$port/predict'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -131,28 +133,13 @@ Widget build(BuildContext context) {
                     fontSize: 16,
                   ),
                 )
-              : Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
+              : 
+                  Image.file(
+                    _image!,
+                    height: 200,
+                    width: 200,
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.file(
-                      _image!,
-                      height: 200,
-                      width: 200,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: _pickImage,

@@ -36,10 +36,13 @@ class _FloodDetectionState extends State<FloodDetection> {
   Image? _predictedMask;
   Image? _resultImage;
   bool? _floodDetected;
+  String? _port;
+  Image? _groundTruthImage;
 
   @override
   void initState() {
     super.initState();
+    _loadGroundTruthImage();
     // Uncomment and implement environment loading if needed
     // _loadEnv();
   }
@@ -52,6 +55,11 @@ class _FloodDetectionState extends State<FloodDetection> {
   //   });
   // }
 
+  Future<void> _loadGroundTruthImage() async{
+    setState(() {
+      _groundTruthImage = Image.asset('assets/flood_ground_truth.jpg');
+    });
+  }
   Future<void> _pickImage() async {
     try {
       final ImagePicker picker = ImagePicker();
@@ -71,6 +79,7 @@ class _FloodDetectionState extends State<FloodDetection> {
 
   Future<void> _detectFlood() async {
     final serverIp = dotenv.env['SERVER_IP'];
+    final port = dotenv.env['PORT'];
     if (_image == null) {
       print('No image to upload');
       return;
@@ -82,7 +91,7 @@ class _FloodDetectionState extends State<FloodDetection> {
 
     // Prepare the request payload
     var response = await http.post(
-      Uri.parse('http://$serverIp:5000/flood'),
+      Uri.parse('http://$serverIp:$port/flood'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -118,9 +127,18 @@ class _FloodDetectionState extends State<FloodDetection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flood Detection'),
+        title: Text(
+          'Flood Detection', 
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Color.fromARGB(255, 79, 79, 79)
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Color.fromARGB(255, 174, 232, 214), // A nice green color for agricultural theme
       ),
-      backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
@@ -132,45 +150,102 @@ class _FloodDetectionState extends State<FloodDetection> {
                 const SizedBox(height: 16),
                 // Display selected image
                 _originalImage == null
-                    ? const Text('No image selected.')
+                    ? Text(
+                        'No image selected.',
+                        style: TextStyle(color: Colors.teal.shade700),
+                      )
                     : Column(
                         children: [
-                          const Text('Original Image:'),
+                          Text(
+                            'Original Image',
+                            style: TextStyle(
+                              color: Colors.teal.shade800,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
                           _originalImage!,
                         ],
                       ),
                 const SizedBox(height: 16),
-                ElevatedButton(
+                ElevatedButton.icon(
                   onPressed: _pickImage,
-                  child: const Text('Select Image from Gallery'),
+                  icon: const Icon(Icons.photo_library),
+                  label: const Text('Select Image from Gallery'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.teal.shade300, // Custom background color
+                    foregroundColor: Colors.white, // Text and icon color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  ),
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
+                ElevatedButton.icon(
                   onPressed: _detectFlood,
-                  child: const Text('Detect Flood'),
+                  icon: const Icon(Icons.water_damage),
+                  label: const Text('Detect Flood'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue.shade300, // Custom background color
+                    foregroundColor: Colors.white, // Text and icon color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 // Display flood detection results
                 if (_floodDetected != null) ...[
                   Text(
                     _floodDetected! 
-                      ? 'Flood Detected!' 
+                      ? 'Flood Detected' 
                       : 'No Flood Detected',
                     style: TextStyle(
-                      color: _floodDetected! ? Colors.red : Colors.green,
+                      color: _floodDetected! 
+                        ? Colors.deepOrange.shade700 
+                        : Colors.green.shade700,
                       fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
                   ),
                 ],
                 if (_predictedMask != null) ...[
                   const SizedBox(height: 16),
-                  const Text('Predicted Flood Mask:'),
+                  Text(
+                    'Predicted Flood Mask',
+                    style: TextStyle(
+                      color: Colors.teal.shade800,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
                   _predictedMask!,
                 ],
+                const SizedBox(height: 5),
                 if (_resultImage != null) ...[
                   const SizedBox(height: 16),
-                  const Text('Result Image with Flood Contours:'),
+                  Text(
+                    'Result Image with Flood Contours',
+                    style: TextStyle(
+                      color: Colors.teal.shade800,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
                   _resultImage!,
+                  const SizedBox(height: 16),
+                     Text(
+                    'Ground Truth Image',
+                    style: TextStyle(
+                      color: Colors.teal.shade800,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  _groundTruthImage ?? const Text('Ground truth not loaded.'),
+
                 ],
               ],
             ),

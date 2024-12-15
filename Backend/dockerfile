@@ -1,0 +1,27 @@
+# Step 1: Base image
+FROM node:20-bookworm
+
+WORKDIR  /app
+
+COPY package*.json ./
+
+ 
+ENV NODE_TLS_REJECT_UNAUTHORIZED=0 
+RUN npm config set strict-ssl false
+
+RUN npm install -g npm@latest
+RUN npm cache clean -f
+RUN npm install --cpu=x64 --os=linux --libc=glibc sharp
+
+
+
+# Step 5: Copy the rest of the application files (excluding those in .dockerignore)
+COPY . .
+
+
+# Step 6: Expose the port your app will run on
+EXPOSE 8181
+
+
+# Step 8: Command to start the app
+CMD ["npm", "start"]

@@ -1,0 +1,6 @@
+node_modules
+.env
+build
+.git/
+server.cert
+server.key
